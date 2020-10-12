@@ -11,14 +11,14 @@ resource "aws_launch_template" "wordpress" {
 }
 
 resource "aws_autoscaling_group" "wordpress" {
-  name = "wordpress-asg-${aws_launch_template.wordpress.latest_version}"
+  name                = "wordpress-asg-${aws_launch_template.wordpress.latest_version}"
   vpc_zone_identifier = ["${aws_subnet.public-a.id}", "${aws_subnet.public-b.id}"]
 
-  min_size            = 2
-  max_size            = 6
+  min_size = 2
+  max_size = 6
 
-  health_check_type   = "ELB"
-  target_group_arns   = ["${aws_lb_target_group.ec2.arn}"]
+  health_check_type = "ELB"
+  target_group_arns = ["${aws_lb_target_group.ec2.arn}"]
 
   launch_template {
     id      = aws_launch_template.wordpress.id
