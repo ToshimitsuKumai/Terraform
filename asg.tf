@@ -1,5 +1,5 @@
 resource "aws_launch_template" "wordpress" {
-  image_id               = "ami-019ad9f3e437c5e8a"
+  image_id               = "ami-0784ba657f25ef8a9"
   name_prefix            = "wordpress-"
   key_name               = "my-key-pair"
   instance_type          = "t3.small"
@@ -15,7 +15,7 @@ resource "aws_autoscaling_group" "wordpress" {
   vpc_zone_identifier = ["${aws_subnet.public-a.id}", "${aws_subnet.public-b.id}"]
 
   min_size = 2
-  max_size = 6
+  max_size = 2
 
   health_check_type = "ELB"
   target_group_arns = ["${aws_lb_target_group.ec2.arn}"]
@@ -40,6 +40,6 @@ resource "aws_autoscaling_policy" "cpu" {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
 
-    target_value = 40.0
+    target_value = 70.0
   }
 }
